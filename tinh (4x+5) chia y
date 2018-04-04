@@ -1,0 +1,46 @@
+#Trinh Vu Tuan Anh 15021548 K60DA
+#Tinh (4*x+5)/y
+#Dung trinh bien dich MARS
+
+.data
+	x: .asciiz "Nhap x: "
+	y: .asciiz "Nhap y: "
+	fp4: .float 4.0
+	fp5: .float 5.0
+.text
+.globl main
+main:
+	#In ra man hinh chuoi x = "Nhap x: "
+	la $a0, x
+	li $v0, 4
+	syscall
+	
+	#Tinh 4x
+	li $v0, 6 #load read_float vao v0 de goi lenh doc so float
+	syscall
+	mov.s $f1, $f0 #chuyen so float vua duoc doc vao f1
+	l.s $f2, fp4 #f2 = 4.0
+	mul.s $f10, $f1, $f2 #tinh f1*f2, load vao f10 -> 4x
+	
+	#tinh 4x+5
+	l.s $f3, fp5 #f3 = 5.0
+	add.s $f10, $f10, $f3 #tinh f10+f3, load vao f10 -> 4x+5 
+	
+	#In ra man hinh chuoi y = "Nhap y: "
+	la $a0, y 
+	li $v0, 4
+	syscall
+	
+	#tinh y
+	li $v0 6 #load read_float vao v0 de goi lenh doc so float
+	syscall
+	mov.s $f11, $f0 #chuyen so float vua duoc doc vao f11 -> y
+	
+	#tinh (4*x+5)/y va in ra ket qua
+	div.s $f12, $f10, $f11 #f12 = f10/f11 -> (4*x+5)/y
+	li $v0 2 #load print_float vao v0, in ra gia tri vua tinh
+	syscall
+	
+	#exit
+	li $v0, 10 
+	syscall
